@@ -3,6 +3,6 @@
 //Создание собственного файла конфигурации
 
 return [
-    'option1' => 'new new new',
+    'option1' => env('APP_NAME'),
     'option2' => 'value2',
 ];
