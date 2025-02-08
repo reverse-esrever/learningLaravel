@@ -9,9 +9,17 @@ Route::get('/', function () {
     return 'weclome';
 });
 
-Route::get('/transactions', [TransactionController::class, 'index']);
-Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->whereNumber('transaction');
-Route::get('/transactions/create', [TransactionController::class, 'create']);
-Route::post('/transactions', [TransactionController::class, 'store']);
-//использование invokable контроллера
-Route::get('/transactions/{transaction}/process', ProcessTransactionController::class)->whereNumber('transaction');
+//Группирование маршрутов
+//Групирование по префиксу
+Route::prefix('transactions')->group(function () {
+    //Группироваие по контроллеру 
+    Route::controller(TransactionController::class)->group(function(){
+        //Присваивание имени маршрутам
+        Route::get('/', 'index')->name('transaction.index');
+        Route::get('/{transaction}',  'show')->whereNumber('transaction')->name('transaction.show');
+        Route::get('/create',  'create')->name('transaction.create');
+        Route::post('/',  'store')->name('transaction.store');
+    });
+    //использование invokable контроллера
+    Route::get('/{transaction}/process', ProcessTransactionController::class)->whereNumber('transaction');
+});
