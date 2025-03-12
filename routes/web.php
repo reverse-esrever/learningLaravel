@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProcessTransactionController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Middleware\AdminCustomMiddleware;
+use App\Http\Middleware\OtherAdminCustomMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +24,14 @@ Route::prefix('transactions')->group(function () {
     });
     //использование invokable контроллера
     Route::get('/{transaction}/process', ProcessTransactionController::class)->whereNumber('transaction');
+});
+
+Route::middleware('admin')->prefix('administration')->group(function(){
+
+    Route::get('/', function(){
+        return 'secret admin page';
+    });
+    Route::get('/other', function(){
+        return "other adminpage";
+    })->withoutMiddleware(OtherAdminCustomMiddleware::class);
 });
