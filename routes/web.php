@@ -4,6 +4,7 @@ use App\Http\Controllers\ProcessTransactionController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Middleware\AdminCustomMiddleware;
 use App\Http\Middleware\OtherAdminCustomMiddleware;
+use App\MusicService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,5 @@ Route::middleware('admin')->prefix('administration')->group(function(){
         return "other adminpage";
     })->withoutMiddleware(OtherAdminCustomMiddleware::class);
 });
+
+Route::get('/music', [MusicService::class, 'play']);
