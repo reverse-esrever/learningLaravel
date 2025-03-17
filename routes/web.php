@@ -39,3 +39,5 @@ Route::middleware('admin')->prefix('administration')->group(function(){
 
 Route::get('/music', [MusicService::class, 'play']);
 Route::get('/pipe', [MusicService::class, 'pipe']);
+
+Route::view('/index', 'index');
